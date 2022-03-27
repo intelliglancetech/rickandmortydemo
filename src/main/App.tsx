@@ -1,24 +1,25 @@
-import React from 'react';
-import '../theme/global.css';
-import Logo from "../assets/images/logo.png"
+import { useEffect } from 'react'
 
-function App() {
+// react-router components
+import { Routes, Route, useLocation } from 'react-router-dom'
+
+// pages
+import { Home, CharacterDetail, NotFound404 } from '../pages/index'
+
+export default function App() {
+  const { pathname } = useLocation()
+
+  // Setting page scroll to 0 when changing the route
+  useEffect(() => {
+    document.documentElement.scrollTop = 0
+    document!.scrollingElement!.scrollTop = 0
+  }, [pathname])
+
   return (
-    <main>
-      <header>
-        <div style={{ width:'100vw', height:350, backgroundColor:"red", display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"flex-end"}}>
-          <div style={{ width:"50%", height:250, background:`url(${Logo}) no-repeat`, backgroundSize:"contain", backgroundPositionY:-80}}/>
-          <div>
-          <h1>The Rick and Morty API</h1>
-          <h1>#FFFFFF</h1>
-          </div>
-        </div>
-        <nav>
-          {/* <div><img src={Logo} /></div> */}
-        </nav>
-      </header>
-    </main>
-  );
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/characters" element={<CharacterDetail />} />
+      <Route path="*" element={<NotFound404 />} />
+    </Routes>
+  )
 }
-
-export default App;
